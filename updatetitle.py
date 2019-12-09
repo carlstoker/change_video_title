@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import argparse, subprocess
-from os.path import basename, splitext
-from shutil import move
+import argparse
+import os
+import shutil
+import subprocess
 from tempfile import TemporaryDirectory
 
 def process_video(filename):
@@ -9,7 +10,7 @@ def process_video(filename):
 
     if settings['title'] is None:
         if settings['filetitle']:
-            title = splitext(basename(filename))[0]
+            title = os.path.splitext(os.path.basename(filename))[0]
         elif settings['interactive']:
             title = input('Enter new title for {}: '.format(filename))
         else:
@@ -25,10 +26,10 @@ def process_video(filename):
             '-c', 'copy',
             '-metadata', 'title={}'.format(title),
             '-loglevel', 'fatal',
-            '{}'.format(basename(filename))
+            '{}'.format(os.path.basename(filename))
         ]
         subprocess.call(command, cwd=temp)
-        move('{}/{}'.format(temp, basename(filename)), filename)
+        shutil.move('{}/{}'.format(temp, os.path.basename(filename)), filename)
         print('Title for {} changed to "{}".'.format(filename, title))
     return True
 
