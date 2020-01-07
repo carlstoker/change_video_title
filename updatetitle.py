@@ -36,7 +36,7 @@ def update_title(filename, title):
     return True
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Change metadata for video files using FFmpeg')
     parser.add_argument('FILE', nargs='+')
     parser.add_argument('--filetitle',
@@ -59,3 +59,7 @@ if __name__ == "__main__":
 
     if args_settings['prompt']:
         input('Press Enter to continue.')
+
+
+if __name__ == "__main__":
+    main()
