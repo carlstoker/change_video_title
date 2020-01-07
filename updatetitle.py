@@ -6,9 +6,7 @@ import subprocess
 from tempfile import TemporaryDirectory
 
 
-def process_video(filename):
-    global settings
-
+def update_title(filename, settings):
     if settings['title'] is None:
         if settings['filetitle']:
             title = os.path.splitext(os.path.basename(filename))[0]
@@ -50,10 +48,10 @@ if __name__ == "__main__":
     parser.add_argument('--title',
                         help='sets new title',
                         default=None),
-    settings = parser.parse_args().__dict__
+    args_settings = parser.parse_args().__dict__
 
-    for f in settings['FILE']:
-        process_video(f)
+    for f in args_settings['FILE']:
+        update_title(f, args_settings)
 
-    if settings['prompt']:
+    if args_settings['prompt']:
         input('Press Enter to continue.')
