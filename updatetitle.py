@@ -5,6 +5,7 @@ import shutil
 import subprocess
 from tempfile import TemporaryDirectory
 
+
 def process_video(filename):
     global settings
 
@@ -33,16 +34,26 @@ def process_video(filename):
         print('Title for {} changed to "{}".'.format(filename, title))
     return True
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Change metadata for video files using FFmpeg')
     parser.add_argument('FILE', nargs='+')
-    parser.add_argument('--filetitle', help='sets new title based on filename (default: %(default)s)', default=False, action='store_true'),
-    parser.add_argument('--interactive', help='prompt for each file\'s new title (default: %(default)s)', default=False, action='store_true'),
-    parser.add_argument('--prompt', help='prompt before exiting (default: %(default)s)', default=False, action='store_true'),
-    parser.add_argument('--title', help='sets new title', default=None),
+    parser.add_argument('--filetitle',
+                        help='sets new title based on filename (default: %(default)s)',
+                        default=False, action='store_true'),
+    parser.add_argument('--interactive',
+                        help='prompt for each file\'s new title (default: %(default)s)',
+                        default=False, action='store_true'),
+    parser.add_argument('--prompt',
+                        help='prompt before exiting (default: %(default)s)',
+                        default=False, action='store_true'),
+    parser.add_argument('--title',
+                        help='sets new title',
+                        default=None),
     settings = parser.parse_args().__dict__
 
-    for filename in settings['FILE']:
-        process_video(filename)
+    for f in settings['FILE']:
+        process_video(f)
+
     if settings['prompt']:
         input('Press Enter to continue.')
