@@ -6,18 +6,18 @@ import subprocess
 from tempfile import TemporaryDirectory
 
 
-def select_title(filename, settings):
-    if settings['title'] is None:
-        if settings['filetitle']:
-            title = os.path.splitext(os.path.basename(filename))[0]
-        elif settings['interactive']:
-            title = input('Enter new title for {}: '.format(filename))
+def select_title(filename, **kwargs):
+    if kwargs['title'] is None:
+        if kwargs['filetitle']:
+            new_title = os.path.splitext(os.path.basename(filename))[0]
+        elif kwargs['interactive']:
+            new_title = input('Enter new title for {}: '.format(filename))
         else:
             print('Title for {} unchanged.'.format(filename))
             return False
     else:
-        title = settings['title']
-    return title
+        new_title = kwargs['title']
+    return new_title
 
 
 def update_title(filename, title):
@@ -51,13 +51,13 @@ def main():
     parser.add_argument('--title',
                         help='sets new title',
                         default=None),
-    args_settings = parser.parse_args().__dict__
+    settings = parser.parse_args().__dict__
 
-    for filename in args_settings['FILE']:
-        title = select_title(filename, args_settings)
+    for filename in settings['FILE']:
+        title = select_title(filename, **settings)
         update_title(filename, title)
 
-    if args_settings['prompt']:
+    if settings['prompt']:
         input('Press Enter to continue.')
 
 
