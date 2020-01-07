@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+Change title metadata for a specified video file or files using FFmpeg.
+
+usage: updatetitle.py [-h] [--filetitle] [--interactive] [--prompt]
+                      [--title TITLE] FILE [FILE ...]
+"""
 import argparse
 import os
 import shutil
@@ -7,6 +13,15 @@ from tempfile import TemporaryDirectory
 
 
 def select_title(filename, **kwargs):
+    """
+    Select a title for a video file based on supplied parameters.
+
+    Keyword arguments:
+    filename -- Filename to modify.
+    **title -- Pre-determined title for filename.
+    **filetitle -- Generate a title from the filename.
+    **interactive -- Prompt the user for a title.
+    """
     if kwargs['title'] is None:
         if kwargs['filetitle']:
             new_title = os.path.splitext(os.path.basename(filename))[0]
@@ -21,6 +36,13 @@ def select_title(filename, **kwargs):
 
 
 def update_title(filename, title):
+    """
+    Update the title metadata tag on a file.
+
+    Keyword arguments:
+    filename -- Filename to modify.
+    title -- New title for specified filename.
+    """
     with TemporaryDirectory() as temp:
         command = [
             'ffmpeg',
@@ -36,7 +58,8 @@ def update_title(filename, title):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Change metadata for video files using FFmpeg')
+    parser = argparse.ArgumentParser(
+                        description='Change title metadata for a specified video file or files using FFmpeg.')
     parser.add_argument('FILE', nargs='+')
     parser.add_argument('--filetitle',
                         help='sets new title based on filename (default: %(default)s)',
