@@ -6,7 +6,7 @@ import subprocess
 from tempfile import TemporaryDirectory
 
 
-def update_title(filename, settings):
+def select_title(filename, settings):
     if settings['title'] is None:
         if settings['filetitle']:
             title = os.path.splitext(os.path.basename(filename))[0]
@@ -17,7 +17,10 @@ def update_title(filename, settings):
             return False
     else:
         title = settings['title']
+    return title
 
+
+def update_title(filename, title):
     with TemporaryDirectory() as temp:
         command = [
             'ffmpeg',
@@ -50,8 +53,9 @@ if __name__ == "__main__":
                         default=None),
     args_settings = parser.parse_args().__dict__
 
-    for f in args_settings['FILE']:
-        update_title(f, args_settings)
+    for filename in args_settings['FILE']:
+        title = select_title(filename, args_settings)
+        update_title(filename, title)
 
     if args_settings['prompt']:
         input('Press Enter to continue.')
