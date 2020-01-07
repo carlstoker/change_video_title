@@ -2,7 +2,7 @@
 """
 Change title metadata for a specified video file or files using FFmpeg.
 
-usage: updatetitle.py [-h] [--filetitle] [--interactive] [--prompt]
+usage: change_video_title.py [-h] [--filetitle] [--interactive] [--prompt]
                       [--title TITLE] FILE [FILE ...]
 """
 import argparse
@@ -14,13 +14,13 @@ from tempfile import TemporaryDirectory
 
 def select_title(filename, **kwargs):
     """
-    Select a title for a video file based on supplied parameters.
+    Select a title based on supplied parameters.
 
     Keyword arguments:
-    filename -- Filename to modify.
-    **title -- Pre-determined title for filename.
+    filename -- Filename of video.
     **filetitle -- Generate a title from the filename.
     **interactive -- Prompt the user for a title.
+    **title -- Pre-determined title for filename.
     """
     if kwargs['title'] is None:
         if kwargs['filetitle']:
@@ -35,9 +35,9 @@ def select_title(filename, **kwargs):
     return new_title
 
 
-def update_title(filename, title):
+def change_title(filename, title):
     """
-    Update the title metadata tag on a file.
+    Change the title metadata tag on a file.
 
     Keyword arguments:
     filename -- Filename to modify.
@@ -77,7 +77,7 @@ def main():
 
     for filename in settings['FILE']:
         title = select_title(filename, **settings)
-        update_title(filename, title)
+        change_title(filename, title)
         print('Title for {} changed to "{}".'.format(filename, title))
 
     if settings['prompt']:
