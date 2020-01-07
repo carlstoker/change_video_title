@@ -32,7 +32,6 @@ def update_title(filename, title):
         ]
         subprocess.call(command, cwd=temp)
         shutil.move('{}/{}'.format(temp, os.path.basename(filename)), filename)
-        print('Title for {} changed to "{}".'.format(filename, title))
     return True
 
 
@@ -56,6 +55,7 @@ def main():
     for filename in settings['FILE']:
         title = select_title(filename, **settings)
         update_title(filename, title)
+        print('Title for {} changed to "{}".'.format(filename, title))
 
     if settings['prompt']:
         input('Press Enter to continue.')
