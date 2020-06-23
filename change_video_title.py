@@ -50,7 +50,7 @@ def change_title(filename, title):
             '-c', 'copy',
             '-metadata', 'title={}'.format(title),
             '-loglevel', 'fatal',
-            '{}'.format(os.path.basename(filename))
+            os.path.basename(filename)
         ]
         subprocess.call(command, cwd=temp)
         shutil.move(os.path.join(temp, os.path.basename(filename)), filename)
