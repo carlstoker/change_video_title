@@ -53,7 +53,8 @@ def change_title(filename, title):
             '{}'.format(os.path.basename(filename))
         ]
         subprocess.call(command, cwd=temp)
-        shutil.move('{}/{}'.format(temp, os.path.basename(filename)), filename)
+        shutil.move(os.path.join(temp, os.path.basename(filename)), filename)
+
     return True
 
 
