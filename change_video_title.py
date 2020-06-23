@@ -26,9 +26,9 @@ def select_title(filename, **kwargs):
         if kwargs['filetitle']:
             new_title = os.path.splitext(os.path.basename(filename))[0]
         elif kwargs['interactive']:
-            new_title = input('Enter new title for {}: '.format(filename))
+            new_title = input('Enter new title for {0}: '.format(filename))
         else:
-            print('Title for {} unchanged.'.format(filename))
+            print('Title for {0} unchanged.'.format(filename))
             return False
     else:
         new_title = kwargs['title']
@@ -48,7 +48,7 @@ def change_title(filename, title):
             'ffmpeg',
             '-i', filename,
             '-c', 'copy',
-            '-metadata', 'title={}'.format(title),
+            '-metadata', 'title={0}'.format(title),
             '-loglevel', 'fatal',
             os.path.basename(filename)
         ]
@@ -79,7 +79,7 @@ def main():
     for filename in settings['FILE']:
         title = select_title(filename, **settings)
         change_title(filename, title)
-        print('Title for {} changed to "{}".'.format(filename, title))
+        print('Title for {0} changed to "{1}".'.format(filename, title))
 
     if settings['prompt']:
         input('Press Enter to continue.')
